@@ -1,0 +1,1 @@
+(find(a.begin(), a.end(), 7) == a.end()) ? 1 : 0
