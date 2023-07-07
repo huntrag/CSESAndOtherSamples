@@ -11,14 +11,14 @@ typedef vector<vector<ll>> vii;
 int main()
 {
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    freopen("../../input.txt", "r", stdin);
+    freopen("../../output.txt", "w", stdout);
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n, m, x, y;
     cin >> n >> m;
-    vector<list<int>> edge(n + 1);
+    vector<vector<int>> edge(n + 1);
     for (int i = 0; i < m; i++)
     {
         cin >> x >> y;
@@ -29,6 +29,7 @@ int main()
     vector<int> parent(n + 1, -1);
     q.push(1);
     parent[1] = 0;
+    bool flag = false;
     while (!q.empty() && parent[n] == -1)
     {
         int cur = q.front();
@@ -38,8 +39,17 @@ int main()
             if (parent[r] == -1)
             {
                 parent[r] = cur;
+                if (r == n)
+                {
+                    flag = true;
+                    break;
+                }
                 q.push(r);
             }
+        }
+        if (flag)
+        {
+            break;
         }
     }
     if (parent[n] == -1)

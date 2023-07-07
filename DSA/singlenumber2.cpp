@@ -15,7 +15,7 @@ typedef vector<vector<ll>> vvll;
 int singleNumber(vector<int> &nums)
 {
     int b0 = 0, b1 = 0, mask = 0;
-    // we are creating counters for 3 - 11 (b1,b0)
+    // we are creating counters for 3 i.e. 11 (b1,b0)
     for (auto &x : nums)
     {
         b1 = (b1 ^ (b0 & x));
@@ -25,6 +25,7 @@ int singleNumber(vector<int> &nums)
         // if we wanted for 2 it would be ~(b1 & (~b0))
         b0 = (b0 & mask);
         b1 = (b1 & mask);
+        cout << b0 << " " << b1 << "\n";
     }
     return b1 | b0;
 }
@@ -32,8 +33,8 @@ int singleNumber(vector<int> &nums)
 int main()
 {
 #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../input.txt", "r", stdin);
+    freopen("../../output.txt", "w", stdout);
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

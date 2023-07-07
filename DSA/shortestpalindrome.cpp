@@ -11,6 +11,16 @@ typedef vector<vector<ll>> vvll;
 #define fi first
 #define se second
 
+string shortestPalindrome(string s)
+{
+    int n = s.length();
+    int st = 0, end = n - 1;
+
+    int count = 0;
+
+    while (st < end)
+}
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -20,22 +30,9 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1;
-    cin >> test;
+    // cin>>test;
     while (test--)
     {
-        int n;
-        cin >> n;
-        int count = 0;
-        for (int i = 0; i < n; i++)
-        {
-            int a, b;
-            cin >> a >> b;
-            if (a - b > 0)
-            {
-                count++;
-            }
-        }
-        cout << count << "\n";
     }
     return 0;
 }

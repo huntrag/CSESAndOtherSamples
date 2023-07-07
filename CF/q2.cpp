@@ -11,6 +11,68 @@ typedef vector<vector<ll>> vvll;
 #define fi first
 #define se second
 
+bool check(vector<vector<int>> &a, int x)
+{
+    // row
+    for (int i = 0; i < 3; i++)
+    {
+        bool flag = true;
+        for (int j = 0; j < 3; j++)
+        {
+            if (a[i][j] != x)
+            {
+                flag = false;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+
+    // col
+    for (int j = 0; j < 3; j++)
+    {
+        bool flag = true;
+        for (int i = 0; i < 3; i++)
+        {
+            if (a[i][j] != x)
+            {
+                flag = false;
+            }
+        }
+        if (flag)
+        {
+            return true;
+        }
+    }
+    bool flag = true;
+    for (int i = 0; i < 3; i++)
+    {
+        if (a[i][i] != x)
+        {
+            flag = false;
+        }
+    }
+    if (flag)
+    {
+        return true;
+    }
+    flag = true;
+    for (int i = 0; i < 3; i++)
+    {
+        if (a[i][2 - i] != x)
+        {
+            flag = false;
+        }
+    }
+    if (flag)
+    {
+        return true;
+    }
+    return false;
+}
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -23,28 +85,47 @@ int main()
     cin >> test;
     while (test--)
     {
-        ll n, m, h;
-        cin >> n >> m >> h;
-        vll cars(n), power(m);
+        vvi a(3, vi(3));
 
-        for (auto &r : cars)
+        for (int i = 0; i < 3; i++)
         {
-            cin >> r;
-        }
-        for (auto &r : power)
-        {
-            cin >> r;
+            string s;
+            getline(cin >> ws, s);
+            for (int j = 0; j < 3; j++)
+            {
+                if (s[j] == 'O')
+                {
+                    a[i][j] = 1;
+                }
+                else if (s[j] == 'X')
+                {
+                    a[i][j] = 2;
+                }
+                else if (s[j] == '+')
+                {
+                    a[i][j] = 3;
+                }
+            }
         }
 
-        sort(cars.rbegin(), cars.rend());
-        sort(power.rbegin(), power.rend());
-        ll ans = 0;
-        for (int i = 0; i < min(m, n); i++)
+        map<int, char> m;
+        m[1] = 'O';
+        m[2] = 'X';
+        m[3] = '+';
+        bool flag = false;
+        for (int i = 1; i <= 3; i++)
         {
-            ans += (ll)min(cars[i], power[i] * h);
+            if (check(a, i))
+            {
+                cout << m[i] << "\n";
+                flag = true;
+                break;
+            }
         }
-        cout << ans << "\n";
+        if (!flag)
+        {
+            cout << "DRAW\n";
+        }
     }
-
     return 0;
 }

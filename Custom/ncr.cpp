@@ -16,6 +16,11 @@ ll mod_inv(ll b);
 ll mod_div(ll a, ll b);
 ll nCr(ll n, ll r);
 
+ll inv(ll a, ll b)
+{
+    return 1 < a ? b - inv(b % a, a) * b / a : 1;
+}
+
 ll nCr(ll n, ll r)
 {
     if (r > n)

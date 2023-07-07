@@ -10,7 +10,34 @@ typedef vector<vector<ll>> vvll;
 #define MOD 1000000007
 #define fi first
 #define se second
+int eraseOverlapIntervals(vector<vector<int>> &iv)
+{
+    vector<pair<int, int>> a(iv.size());
 
+    for (int i = 0; i < iv.size(); i++)
+    {
+        a[i] = make_pair(iv[i][1], iv[i][0]);
+    }
+
+    sort(a.begin(), a.end());
+
+    int count = 0;
+    int nd = a[0].first;
+
+    for (int i = 1; i < iv.size(); i++)
+    {
+        if (a[i].second < nd)
+        {
+            count++;
+        }
+        else
+        {
+            nd = max(nd, a[i].first);
+        }
+    }
+
+    return count;
+}
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -20,22 +47,9 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1;
-    cin >> test;
+    // cin>>test;
     while (test--)
     {
-        int n;
-        cin >> n;
-        int count = 0;
-        for (int i = 0; i < n; i++)
-        {
-            int a, b;
-            cin >> a >> b;
-            if (a - b > 0)
-            {
-                count++;
-            }
-        }
-        cout << count << "\n";
     }
     return 0;
 }

@@ -10,6 +10,22 @@ typedef vector<vector<ll>> vvll;
 #define MOD 1000000007
 #define fi first
 #define se second
+int mask = 3;
+
+void nextmask(vi &a)
+{
+    vi prev(a);
+
+    int nd = prev[0];
+
+    a[0] = (prev[0] + 1) % mask;
+
+    for (int i = 1; i < a.size(); i++)
+    {
+        a[i] = (prev[i] + (nd & 2) / 2) % mask;
+        nd = (nd & prev[i]);
+    }
+}
 
 int main()
 {
@@ -23,19 +39,6 @@ int main()
     cin >> test;
     while (test--)
     {
-        int n;
-        cin >> n;
-        int count = 0;
-        for (int i = 0; i < n; i++)
-        {
-            int a, b;
-            cin >> a >> b;
-            if (a - b > 0)
-            {
-                count++;
-            }
-        }
-        cout << count << "\n";
     }
     return 0;
 }

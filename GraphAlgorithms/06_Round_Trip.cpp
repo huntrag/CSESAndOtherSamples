@@ -8,81 +8,110 @@ typedef vector<vector<ll>> vii;
 #define fi first
 #define se second
 
+class Graph
+{
+public:
+    int n;
+    vector<vector<int>> adj;
+    vector<int> color;
+    vector<int> parent;
+
+    Graph(int v)
+    {
+        this->n = v;
+        adj.resize(v + 1);
+        color.resize(v + 1);
+        parent.resize(v + 1, -1);
+    }
+
+    void add(int x, int y)
+    {
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+
+    void printCycle()
+    {
+        vector<int> ans;
+        bool res = false;
+        for (int i = 1; i <= n; i++)
+        {
+            if (color[i] != 2)
+            {
+                res = res | isCycle(i, -1, ans);
+            }
+            if (res)
+            {
+                break;
+            }
+        }
+
+        if (!res)
+        {
+            cout << "IMPOSSIBLE\n";
+            return;
+        }
+        cout << ans.size() << "\n";
+        for (auto &x : ans)
+        {
+            cout << x << " ";
+        }
+    }
+
+    bool isCycle(int v, int prev, vector<int> &ans)
+    {
+        if (color[v] == 2)
+        {
+            return false;
+        }
+
+        if (color[v] == 1)
+        {
+            int cur = prev;
+            ans.push_back(cur);
+
+            while (cur != v)
+            {
+                cur = parent[cur];
+                ans.push_back(cur);
+            }
+
+            return true;
+        }
+        parent[v] = prev;
+        color[v] = 1;
+        bool res = false;
+        for (auto &neigh : adj[v])
+        {
+            if (neigh == parent[v])
+            {
+                continue;
+            }
+            res = res | isCycle(neigh, v, ans);
+        }
+
+        color[v] = 2;
+        return res;
+    }
+};
+
 int main()
 {
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    freopen("../../input.txt", "r", stdin);
+    freopen("../../output.txt", "w", stdout);
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n, m, x, y;
+    int n, m;
     cin >> n >> m;
-    vector<list<int>> edge(n + 1);
+    Graph *g = new Graph(n);
     while (m--)
     {
+        int x, y;
         cin >> x >> y;
-        edge[x].push_back(y);
-        edge[y].push_back(x);
+        g->add(x, y);
     }
-    vector<int> vis(n + 1, 0);
-    vector<int> parent(n + 1);
-    int cur;
-    bool mil = false;
-    for (int i = 1; i <= n && !mil; i++)
-    {
-        stack<int> q;
-        q.push(i);
-
-        while (!q.empty() && !mil)
-        {
-            cur = q.top();
-            q.pop();
-            for (auto &r : edge[cur])
-            {
-                if (vis[r])
-                {
-                    if (parent[cur] == r || parent[r] == cur)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        int temp = parent[r];
-                        parent[temp] = r;
-                        parent[r] = cur;
-
-                        mil = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    vis[r] = true;
-                    q.push(r);
-                    parent[r] = cur;
-                }
-            }
-        }
-    }
-    if (!mil)
-    {
-        cout << "IMPOSSIBLE";
-        return 0;
-    }
-    vector<int> s;
-    s.push_back(cur);
-    int st = parent[cur];
-    while (st != cur)
-    {
-        s.push_back(st);
-        st = parent[st];
-    }
-    s.push_back(cur);
-    cout << s.size() << "\n";
-    for (auto &r : s)
-    {
-        cout << r << " ";
-    }
+    g->printCycle();
     return 0;
 }

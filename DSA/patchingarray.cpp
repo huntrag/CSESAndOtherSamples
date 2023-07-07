@@ -11,6 +11,31 @@ typedef vector<vector<ll>> vvll;
 #define fi first
 #define se second
 
+int minPatches(vi &a, int k)
+{
+    int n = a.size();
+
+    multiset<int> ms;
+
+    for (auto &x : a)
+    {
+        ms.insert(x);
+    }
+
+    vi factors;
+    int cur = k;
+    while (cur > 0)
+    {
+        factors.push_back(cur);
+        cur = (cur + 1) / 2;
+    }
+    reverse(factors.begin(), factors.end());
+
+    for (int i = 0; i < factors.size(); i++)
+    {
+    }
+}
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -20,22 +45,17 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int test = 1;
-    cin >> test;
+    // cin>>test;
     while (test--)
     {
-        int n;
-        cin >> n;
-        int count = 0;
-        for (int i = 0; i < n; i++)
+        int n, k;
+        cin >> n >> k;
+        vi a(n);
+        for (auto &x : a)
         {
-            int a, b;
-            cin >> a >> b;
-            if (a - b > 0)
-            {
-                count++;
-            }
+            cin >> x;
         }
-        cout << count << "\n";
+        cout << minPatches(a, k);
     }
     return 0;
 }

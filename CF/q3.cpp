@@ -11,6 +11,22 @@ typedef vector<vector<ll>> vvll;
 #define fi first
 #define se second
 
+bool comp(pair<ll, ll> &a, pair<ll, ll> &b)
+{
+    if (a.first > b.first)
+    {
+        return true;
+    }
+    else if (a.first == b.first)
+    {
+        if (a.second < b.second)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -23,42 +39,54 @@ int main()
     cin >> test;
     while (test--)
     {
-        ll n;
-        cin >> n;
-        vll a(n);
-        for (auto &r : a)
+        ll n, m, h;
+        cin >> n >> m >> h;
+        vector<pair<ll, ll>> score(n);
+
+        vvll a(n, vll(m));
+
+        for (int i = 0; i < n; i++)
         {
-            cin >> r;
-        }
-        ll mxi = *max_element(a.begin(), a.end());
-        ll mask = 1ll;
-        ll mx = -1;
-        for (ll i = 0; i < 63; i++)
-        {
-            if ((mxi & mask) > 0)
+            for (int j = 0; j < m; j++)
             {
-                mx = max(mx, i);
-            }
-            mask = (ll)mask * 2ll;
-            // cout << mask << "\n";
-        }
-        // mask = (1 << mx);
-        mask = 1ll;
-        for (ll i = 1; i <= mx; i++)
-        {
-            mask = (ll)mask * 2ll;
-        }
-        // cout << mx << "\n";
-        ll count = 0;
-        for (ll i = 0; i < n; i++)
-        {
-            if ((a[i] & mask) > 0)
-            {
-                count++;
+                cin >> a[i][j];
             }
         }
 
-        cout << ceil((long double)count / 2) << "\n";
+        for (int i = 0; i < n; i++)
+        {
+            sort(a[i].begin(), a[i].end());
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            ll tm = 0;
+            ll pen = 0;
+            int j;
+            for (j = 0; j < m; j++)
+            {
+                if (tm + a[i][j] > h)
+                {
+                    break;
+                }
+                tm = (ll)tm + a[i][j];
+                pen = (ll)pen + tm;
+            }
+            score[i] = make_pair(j, pen);
+        }
+
+        pair<ll, ll> her = score[0];
+
+        sort(score.begin(), score.end(), comp);
+        int i;
+        for (i = 0; i < n; i++)
+        {
+            if (score[i].first == her.first && score[i].second == her.second)
+            {
+                break;
+            }
+        }
+        cout << i + 1 << "\n";
     }
     return 0;
 }
