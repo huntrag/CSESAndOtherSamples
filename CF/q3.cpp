@@ -10,24 +10,11 @@ typedef vector<vector<ll>> vvll;
 #define MOD 1000000007
 #define fi first
 #define se second
+#define deb(x) cout << x << endl
+#define deb2(x, y) cout << x << ' ' << y << endl
+#define deb3(x, y, z) cout << x << ' ' << y << ' ' << z << endl
 
-bool comp(pair<ll, ll> &a, pair<ll, ll> &b)
-{
-    if (a.first > b.first)
-    {
-        return true;
-    }
-    else if (a.first == b.first)
-    {
-        if (a.second < b.second)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-int main()
+signed main()
 {
 #ifndef ONLINE_JUDGE
     freopen("../../input.txt", "r", stdin);
@@ -39,54 +26,6 @@ int main()
     cin >> test;
     while (test--)
     {
-        ll n, m, h;
-        cin >> n >> m >> h;
-        vector<pair<ll, ll>> score(n);
-
-        vvll a(n, vll(m));
-
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                cin >> a[i][j];
-            }
-        }
-
-        for (int i = 0; i < n; i++)
-        {
-            sort(a[i].begin(), a[i].end());
-        }
-
-        for (int i = 0; i < n; i++)
-        {
-            ll tm = 0;
-            ll pen = 0;
-            int j;
-            for (j = 0; j < m; j++)
-            {
-                if (tm + a[i][j] > h)
-                {
-                    break;
-                }
-                tm = (ll)tm + a[i][j];
-                pen = (ll)pen + tm;
-            }
-            score[i] = make_pair(j, pen);
-        }
-
-        pair<ll, ll> her = score[0];
-
-        sort(score.begin(), score.end(), comp);
-        int i;
-        for (i = 0; i < n; i++)
-        {
-            if (score[i].first == her.first && score[i].second == her.second)
-            {
-                break;
-            }
-        }
-        cout << i + 1 << "\n";
     }
     return 0;
 }

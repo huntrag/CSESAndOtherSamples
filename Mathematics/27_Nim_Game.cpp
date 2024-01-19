@@ -11,6 +11,8 @@ typedef vector<vector<ll>> vvll;
 #define fi first
 #define se second
 
+const int MAX = (1 << 15);
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -19,10 +21,22 @@ int main()
 #endif
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int test = 1;
-    cin >> test;
-    while (test--)
-    {
-    }
+    // int test = 1;
+    // cin >> test;
+    // while (test--)
+    // {
+    //     int n;
+    //     cin >> n;
+    //     int x;
+    //     int sum = 0;
+    //     while (n--)
+    //     {
+    //         cin >> x;
+    //         sum = sum ^ x;
+    //     }
+    //     string s = (sum == 0) ? "second" : "first";
+    //     cout << s << "\n";
+    cout << MAX;
+    // }
     return 0;
 }

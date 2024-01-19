@@ -51,6 +51,19 @@ int main()
     // cin>>test;
     while (test--)
     {
+        list<int> a;
+        a.push_back(1);
+        a.push_back(0);
+        a.push_back(2);
+        a.sort();
+
+        for (auto it = a.begin(); it != a.end(); it++)
+        {
+            if (*it == 1)
+            {
+                a.erase(it);
+            }
+        }
     }
     return 0;
 }
